@@ -26,9 +26,17 @@ jobs:
       - name: Build with Buildozer
         run: |
           pip install buildozer cython virtualenv
-          # КРИТИЧЕСКИЙ ФИКС: Принудительно очищаем глобальные переменные NDK 27, чтобы задействовать r25c
+          
+          # РАДИКАЛЬНЫЙ ФИКС: Физически удаляем дефолтные NDK 27 и NDK 30 с сервера, 
+          # чтобы у Buildozer не было шансов запустить несовместимый компилятор
+          sudo rm -rf /usr/local/lib/android/sdk/ndk/*
+          
+          # Полностью зануляем системные переменные путей во всех возможных форматах
+          export ANDROID_NDK=""
           export ANDROID_NDK_HOME=""
           export ANDROID_NDK_ROOT=""
+          export ANDROID_NDK_LATEST_HOME=""
+          
           yes | buildozer android debug
           
       - name: Upload APK
