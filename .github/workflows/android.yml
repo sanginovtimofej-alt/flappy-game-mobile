@@ -12,7 +12,6 @@ jobs:
         with:
           python-version: '3.11'
 
-      # Устанавливаем Java 17, которая необходима компилятору Android
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -27,7 +26,8 @@ jobs:
       - name: Build with Buildozer
         run: |
           pip install buildozer cython virtualenv
-          buildozer android debug
+          # Автоматически принимаем все лицензии Android SDK, чтобы сборка не зависала
+          yes | buildozer android debug
           
       - name: Upload APK
         uses: actions/upload-artifact@v4
