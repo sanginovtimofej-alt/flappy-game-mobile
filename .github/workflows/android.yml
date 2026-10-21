@@ -12,10 +12,17 @@ jobs:
         with:
           python-version: '3.11'
 
+      # Устанавливаем Java 17, которая необходима компилятору Android
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Install Buildozer dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev libffi-dev libgmp-dev libltdl-dev libgomp1
+          sudo apt-get install -y git zip unzip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev libffi-dev libgmp-dev libltdl-dev libgomp1
 
       - name: Build with Buildozer
         run: |
